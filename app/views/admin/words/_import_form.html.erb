@@ -1,0 +1,5 @@
+<%= link_to 'Import CSV', 'javascript:;', id: 'words-import-btn' %>
+
+<%= form_for :word, url: admin_words_import_path, multipart: true, html: { class: 'hidden' } do |f| %>
+  <%= f.file_field :file, id: 'upload-words-btn' %>
+<% end %>
