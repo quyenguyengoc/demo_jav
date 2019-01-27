@@ -1,0 +1,74 @@
+<header class='topbar'>
+  <nav class='navbar top-navbar navbar-expand-md navbar-dark'>
+    <div class='navbar-header'>
+      <%= link_to 'javascript:;', class: 'nav-toggler waves-effect waves-light d-block d-md-none' do %>
+        <i class='ti-menu ti-close'></i>
+      <% end %>
+      <%= link_to root_path, class: 'navbar-brand' do %>
+        <b class='logo-icon'>
+          <%= image_tag 'templates/logo-icon.png', class: 'dark-logo' %>
+        </b>
+        <span class='logo-text'>
+          <%= image_tag 'templates/logo-text.png', class: 'dark-logo' %>
+        </span>
+      <% end %>
+      <%= link_to 'javascript:;', class: 'topbartoggler d-block d-md-none waves-effect waves-light',
+        aria: { controls: 'navbarSupportedContent', expanded: false , label: 'Toggle navigation' },
+        data: { toggle: 'collapse', target: '#navbarSupportedContent' } do %>
+        <i class='ti-more'></i>
+      <% end %>
+    </div>
+    <div class='navbar-collapse collapse' id='navbarSupportedContent'>
+      <ul class='navbar-nav float-left mr-auto'>
+        <li class='nav-item d-none d-md-block'>
+          <%= link_to 'javascript:;', class: 'nav-link sidebartoggler waves-effect waves-light', data: { sidebartype: 'mini-sidebar' } do %>
+            <i class='mdi mdi-menu font-24'></i>
+          <% end %>
+        </li>
+      </ul>
+      <ul class='navbar-nav float-right'>
+        <li class='nav-item dropdown'>
+          <%= link_to '#', class: 'nav-link dropdown-toggle', id: 'navbarDropdown2', role: 'button',
+            data: { toggle: 'dropdown' }, aria: { haspopup: true, expanded: false } do %>
+            <i class='flag-icon flag-icon-us'></i>
+          <% end %>
+          <div class='dropdown-menu dropdown-menu-right animated bounceInDown' aria-labelledby='navbarDropdown2'>
+            <%= link_to '#', class: 'dropdown-item' do %>
+              <i class='flag-icon flag-icon-us'></i> English
+            <% end %>
+            <%= link_to '#', class: 'dropdown-item' do %>
+              <i class='flag-icon flag-icon-jp'></i> Japanese
+            <% end %>
+          </div>
+        </li>
+        <li class='nav-item dropdown'>
+          <%= link_to '#', class: 'nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic',
+            data: { toggle: 'dropdown' }, aria: { haspopup: true, expanded: false } do %>
+            <%= image_tag 'templates/default_avatar.jpg', class: 'rounded-circle', width: 31 %>
+          <% end %>
+          <div class='dropdown-menu dropdown-menu-right user-dd animated flipInY'>
+            <span class='with-arrow'>
+              <span class='bg-primary'></span>
+            </span>
+            <div class='d-flex no-block align-items-center p-15 bg-primary text-white mb-2'>
+              <div class=''>
+                <%= image_tag 'templates/default_avatar.jpg', class: 'img-circle', width: 60 %>
+              </div>
+              <div class='ml-2'>
+                <h4 class='mb-0'>Quyen Nguyen</h4>
+                <p class=' mb-0'>quyenguyengoc911@gmail.com</p>
+              </div>
+            </div>
+            <%= link_to '#', class: 'dropdown-item' do %>
+              <i class='ti-user mr-1 ml-1'></i> My Profile
+            <% end %>
+            <div class='dropdown-divider'></div>
+            <%= link_to '#', class: 'dropdown-item' do %>
+              <i class='fa fa-power-off mr-1 ml-1'></i> Logout
+            <% end %>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

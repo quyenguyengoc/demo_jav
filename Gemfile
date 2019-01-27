@@ -41,6 +41,8 @@ gem 'activeadmin' # Gem Active Admin is a ROR framework for creating elegant bac
 gem 'devise' # Gem devise is a flexible authentication solution for Rails based on Warden
 gem 'devise-async'
 gem 'cancancan'
+gem 'bootstrap', '~> 4.2.1'
+gem 'jquery-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
