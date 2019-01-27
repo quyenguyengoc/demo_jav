@@ -27,7 +27,7 @@ ActiveAdmin.register Word do
     f.actions
   end
 
-  action_item only: [:index] do
+  action_item(:index) do
     render 'import_form'
   end
 
