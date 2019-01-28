@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">New Test</h4>
+        <h6 class="card-subtitle"> New words test </h6>
+        <%= form_for(@test, html: { class: 'mt-4'}) do |f| %>
+          <div class="form-group">
+            <h6 class="card-subtitle">High priority for <code>low correct rate</code>.</h6>
+            <%= f.check_box :high_priority, id: 'high_priority',
+              data: { 'on-color': :success, 'off-color': :info, 'on-text': 'Yes', 'off-text': 'No' } %>
+          </div>
+          <div class="form-group">
+            <label class="mr-sm-2" for="select-lesson-number">Lesson numbers:</label>
+            <%= f.select(:lesson_numbers, @lessons.collect { |l| [lesson_name(l.number), l.id] }, { include_blank: false },
+              { class: 'select2 form-control', style: 'height: 35px;width: 100%;', multiple: true, id: 'select-lesson-numbe' }) %>
+          </div>
+          <div class="form-group">
+            <label class="mr-sm-2" for="select-total-question">Number of question:</label>
+            <%= f.select(:total_questions, @number_question_option.collect { |option| [option, option ] }, { include_blank: false },
+              { class: 'custom-select mr-sm-2',  id: 'select-total-question' }) %>
+          </div>
+          <%= f.button 'Create', type: 'submit', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= content_for(:javascript) do %>
+  <script type="text/javascript">
+    $('#high_priority').bootstrapSwitch();
+    $(function() {
+      $('.select2').select2({
+        theme: 'bootstrap'
+      });
+    });
+  </script>
+<% end %>

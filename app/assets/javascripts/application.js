@@ -16,3 +16,6 @@
 //= require popper
 //= require bootstrap
 //= require templates
+//= require select2-full
+//= require bootstrap-switch
+//= require common
