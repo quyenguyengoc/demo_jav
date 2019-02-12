@@ -32,11 +32,14 @@ ActiveRecord::Schema.define(version: 2018_12_26_090436) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "test_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "test_id", null: false
     t.integer "word_id", null: false
-    t.text "user_answer", null: false
-    t.boolean "correct", default: false
+    t.text "user_answer"
+    t.string "answer_1", null: false
+    t.string "answer_2", null: false
+    t.string "answer_3", null: false
+    t.string "answer_4", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -45,6 +48,7 @@ ActiveRecord::Schema.define(version: 2018_12_26_090436) do
     t.integer "total_questions", null: false
     t.integer "correct_question_count", default: 0
     t.integer "user_id", null: false
+    t.boolean "status", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

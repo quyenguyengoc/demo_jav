@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   root 'dashboard#index'
 
-  resources :tests, only: [:new, :create, :show]
+  resources :tests, only: [:new, :create, :show, :update]
+  post '/words' => 'words#index', constraints: { format: :json }
 end

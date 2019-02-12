@@ -35,6 +35,7 @@ ActiveAdmin.register Word do
 
     def import
       ImportWordsService.new(params[:word][:file]).import
+      redirect_to admin_words_path
     end
   end
 

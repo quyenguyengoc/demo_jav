@@ -1,0 +1,166 @@
+<% total_questions = @questions.size %>
+<% total_boxs = (total_questions.to_f / 6).ceil %>
+<div class='row'>
+  <div class='col-md-10'>
+    <% unless @test.status %>
+      <div class="card">
+        <div class="card-body">
+          <div class="progress mt-3 finish-test-progress-bar">
+            <div class="progress-bar bg-success wow animated progress-animated" role="progressbar">0%</div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class='col-md-2 p-0'>
+    <% if @test.status %>
+      <div class="card">
+        <div class="card-body text-right">
+          <h4 class='card-title mb-0'><%= "#{@test.correct_question_count}/#{total_questions}" %></h4>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class='row'>
+  <div class='col-md-10 detail-questions-box'>
+    <%= form_for(@test) do |f| %>
+      <% [*0...total_boxs].each do |box_no| %>
+        <% start_at, end_at = [box_no * 6, box_no * 6 + 6] %>
+        <div class='row questions-box <%= "questions-box-active" if box_no == 0 %>'>
+          <% @questions[start_at...end_at].each_with_index do |question, index| %>
+            <% question_no = index + start_at + 1 %>
+            <div class='col-sm-12 col-md-6 question-box'>
+              <div class='card'>
+                <div class='card-body'>
+                  <h4 class='card-title jp-text'><%= "#{question_no}. #{question.word_content}" %></h4>
+                  <%= f.fields_for :questions, question do |question_field| %>
+                    <% question.answers.each_with_index do |ans, ans_index| %>
+                      <div class='custom-control custom-radio mb-2'>
+                        <%= question_field.radio_button :user_answer, ans,
+                          id: "ques_#{question.id}_ans_#{ans_index}", class: 'custom-control-input', disabled: @test.status %>
+                        <label class='custom-control-label jp-text <%= user_ans(@test.status, question.word.meaning, question.user_answer, ans) %> <%= right_ans(@test.status, question.word.meaning, question.user_answer, ans) %>'
+                          for='<%= "ques_#{question.id}_ans_#{ans_index}" %>'>
+                          <%= ans %>
+                        </label>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class='col-md-2 overview-questions-box nano'>
+    <div class='row nano-content'>
+      <% @questions.each_with_index do |question, index| %>
+        <div class='col-sm-12'>
+          <div class='card'>
+            <div class='card-body'>
+              <h4 class='card-title jp-text inline-block mb-0'><%= "#{index + 1}." %></h4>
+              <% question.answers.each_with_index do |ans, ans_index| %>
+                <div class='custom-control custom-radio inline-block mb-0'>
+                  <input type="radio" id=<%= "overview_ques_#{question.id}_ans_#{ans_index}" %>
+                    name=<%= "test[questions_attributes][#{index}][user_answer]" %>
+                    class='custom-control-input' disabled <%= 'checked' if question.user_answer == ans %>>
+                  <label class='custom-control-label <%= user_ans(@test.status, question.word.meaning, question.user_answer, ans) %> <%= right_ans(@test.status, question.word.meaning, question.user_answer, ans) %>'>
+                  </label>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class='row'>
+  <div class='col-md-10'>
+    <div class='card'>
+      <div class='card-body' id='paginate-questions'>
+        <nav class="pagination" role="navigation" aria-label="pager">
+          <span class="prev">
+          </span>
+          <span class="next">
+            <button class='btn waves-effect waves-light btn-rounded btn-success', onclick='nextPage()'>Next</button>
+          </span>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class='col-md-2'>
+  </div>
+</div>
+
+<% content_for :javascript do %>
+  <script type='text/javascript'>
+    $(function() {
+      $('.overview-questions-box').nanoScroller();
+    });
+
+    let prevBoxBtn = '<button class="btn waves-effect waves-light btn-rounded btn-success"\
+                      onclick="prevPage()" id="prevBoxBtn">Prev</button>';
+    let nextBoxBtn = '<button class="btn waves-effect waves-light btn-rounded btn-success"\
+                      onclick="nextPage()" id="nextBoxBtn">Next</button>';
+    let submitBtn  = '<button class="btn waves-effect waves-light btn-rounded btn-warning"\
+                      onclick="submitTest()" id="submitBtn">Submit</button>';
+    let finish_percent = finishPercent();
+    $('.finish-test-progress-bar .progress-bar').css('width', finish_percent + '%');
+    $('.finish-test-progress-bar .progress-bar').text(finish_percent + '%');
+
+    function finishPercent() {
+      let total_questions = $('.detail-questions-box .custom-control-input').length/4;
+      let selected_questions = $('.detail-questions-box .custom-control-input:checked').length;
+      let finish_percent = Math.floor(selected_questions * 100 / total_questions);
+      return finish_percent;
+    }
+    $('.custom-control-input').on('change', function() {
+      let ans_id = $(this).attr('id');
+      let finish_percent = finishPercent();
+      $('#overview_' + ans_id).prop('checked', true);
+
+      $('.finish-test-progress-bar .progress-bar').css('width', finish_percent + '%');
+      $('.finish-test-progress-bar .progress-bar').text(finish_percent + '%');
+      if (finish_percent == 100) {
+        $('span.next').html(submitBtn);
+      }
+      $('#submitBtn').attr('disabled', finish_percent != 100);
+    });
+
+    function prevPage() {
+      $('span.next').html(nextBoxBtn);
+      let current_box = $('div.questions-box.questions-box-active');
+      let prevBox = current_box.prev();
+      if (prevBox.is(':first-child')) {
+        $('span.prev').html('');
+      } else {
+        $('span.prev').html(prevBoxBtn);
+      }
+      current_box.removeClass('questions-box-active');
+      prevBox.addClass('questions-box-active');
+    }
+
+    function nextPage() {
+      $('span.prev').html(prevBoxBtn);
+      let current_box = $('div.questions-box.questions-box-active');
+      let nextBox = current_box.next();
+      if (nextBox.is(':last-child')) {
+        $('span.next').html(submitBtn);
+        let finish_percent = finishPercent();
+        let test_status = <%= @test.status %>;
+        $('#submitBtn').attr('disabled', finish_percent != 100 || test_status);
+      } else {
+        $('span.next').html(nextBoxBtn);
+      }
+      current_box.removeClass('questions-box-active');
+      nextBox.addClass('questions-box-active');
+    }
+
+    function submitTest() {
+      $('.edit_test').submit();
+    }
+  </script>
+<% end %>

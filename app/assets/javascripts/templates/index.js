@@ -6,3 +6,4 @@
 //= require templates/waves
 //= require templates/sidebarmenu
 //= require templates/custom.min
+//= require templates/jquery.nanoscroller.min

@@ -35,6 +35,13 @@
                 <i class='mdi mdi-network-question'></i><span class='hide-menu'> New test</span>
               <% end %>
             </li>
+            <% @tests.each do |test| %>
+              <li class='sidebar-item'>
+                <%= link_to test_path(test), class: "sidebar-link #{'not-submited-test' unless test.status}" do %>
+                  <i class='mdi mdi-network-question'></i><span class='hide-menu'><%= test.test_number %></span>
+                <% end %>
+              </li>
+            <% end %>
           </ul>
         </li>
       </ul>
