@@ -4,6 +4,7 @@ class CreateTests < ActiveRecord::Migration[5.2]
       t.integer :total_questions, null: false
       t.integer :correct_question_count, default: 0
       t.integer :user_id, null: false
+      t.boolean :status, null: false, default: 0
 
       t.timestamps
     end

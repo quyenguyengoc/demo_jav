@@ -1,7 +1,10 @@
 class Word < ApplicationRecord
 
   validates :content, :meaning, :romaji, presence: true
+
   belongs_to :lesson
+  has_many :questions
+  delegate :number, to: :lesson, prefix: :lesson
 
   scope :_ids, ->(ids) {
     where(id: ids)
@@ -11,7 +14,19 @@ class Word < ApplicationRecord
     where.not(id: ids)
   }
 
-  def lesson_number
-    lesson.number
-  end
+  scope :_lesson_ids, ->(lesson_ids) {
+    where(lesson_id: lesson_ids)
+  }
+
+  scope :random, -> {
+    order('RAND()')
+  }
+
+  scope :_correct_rate_asc, -> {
+    order(correct_rate: :asc)
+  }
+
+  scope :_count_by_lesson, ->(lesson_ids) {
+    where(lesson_id: lesson_ids).group(:lesson_id).count
+  }
 end

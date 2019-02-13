@@ -1,2 +1,2 @@
 //= require arctic_admin/base
-//= require common
+//= require admin/common

@@ -1,23 +1,13 @@
-class Question
+class Question < ApplicationRecord
 
-  attr_accessor :question
+  validates :user_answer, presence: true, on: :update
 
-  def initialize(word)
-    self.question = {
-      word_id: word.id,
-      content: word.content,
-      right_ans: word.meaning
-    }
-    add_answer
-  end
+  belongs_to :test
+  belongs_to :word
+  delegate :content, to: :word, prefix: :word
+  delegate :meaning, to: :word, prefix: :word
 
-  def add_answer
-    answers = [question[:right_ans]]
-    answers +=  Word._ids(Word.pluck(:id).sample(3))._not_ids(question[:word_id]).pluck(:meaning)
-    answers.shuffle.each_with_index do |ans, index|
-      question["ans_#{index + 1}"] = ans
-    end
+  def answers
+    [answer_1, answer_2, answer_3, answer_4]
   end
 end
-
-

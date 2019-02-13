@@ -6,4 +6,7 @@ Rails.application.routes.draw do
   post 'admin/words/import', to: 'admin/words#import'
 
   root 'dashboard#index'
+
+  resources :tests, only: [:new, :create, :show, :update]
+  post '/words' => 'words#index', constraints: { format: :json }
 end
