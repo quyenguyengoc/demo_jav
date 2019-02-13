@@ -19,7 +19,7 @@ class Word < ApplicationRecord
   }
 
   scope :random, -> {
-    order('RAND()')
+    order(Arel.sql(Settings.random_scope[ActiveRecord::Base.connection.instance_values["config"][:adapter]]))
   }
 
   scope :_correct_rate_asc, -> {

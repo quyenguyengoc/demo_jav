@@ -43,6 +43,7 @@ gem 'bootstrap', '~> 4.2.1'
 gem 'jquery-rails'
 gem 'bootstrap-switch-rails'
 gem 'select2-rails'
+gem 'config'
 
 group :development, :test do
   # Use mysql as the database for Active Record

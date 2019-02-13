@@ -1,0 +1,3 @@
+random_scope:
+  mysql2: 'RAND()'
+  postgresql: 'RANDOM()'
