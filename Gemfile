@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
 
 ruby '2.5.1'
 
@@ -71,8 +71,9 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
+  gem 'pg', '0.18.4'
   gem 'rails_12factor'
+  gem 'heroku-deflater'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
