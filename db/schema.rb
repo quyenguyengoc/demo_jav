@@ -72,7 +72,6 @@ ActiveRecord::Schema.define(version: 2018_12_26_090436) do
     t.string "kanji"
     t.string "romaji", null: false
     t.float "correct_rate", default: 0.0
-    t.integer "test_count", default: 0
     t.integer "lesson_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

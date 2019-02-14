@@ -29,4 +29,8 @@ class Word < ApplicationRecord
   scope :_count_by_lesson, ->(lesson_ids) {
     where(lesson_id: lesson_ids).group(:lesson_id).count
   }
+
+  def to_romaji
+    content.romaji
+  end
 end

@@ -44,6 +44,7 @@ gem 'jquery-rails'
 gem 'bootstrap-switch-rails'
 gem 'select2-rails'
 gem 'config'
+gem 'mojinizer'
 
 group :development, :test do
   # Use mysql as the database for Active Record
