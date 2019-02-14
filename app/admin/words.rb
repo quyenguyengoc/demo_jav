@@ -12,7 +12,6 @@ ActiveAdmin.register Word do
       lesson_name(word.lesson_number)
     end
     column :correct_rate
-    column :test_count
     actions
   end
 
